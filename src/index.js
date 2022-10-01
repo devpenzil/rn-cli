@@ -1,9 +1,10 @@
-function sayMyName(name) {
-    if (name === "Heisenberg") {
-        console.log("You're right 👍");
-    }
-    else {
-        console.log("You're wrong 👎");
-    }
-}
-sayMyName("Heisenberg");
+#! /usr/bin/env node
+import inquirer from "inquirer";
+const Start = () => {
+  const method = inquirer.prompt({
+    name: "TYPE",
+    type: "list",
+    choices: ["Project", "Component", "Screen"],
+  });
+};
+Start();
