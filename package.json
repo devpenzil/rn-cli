@@ -23,6 +23,7 @@
   "homepage": "https://github.com/devpenzil/rn-cli#readme",
   "dependencies": {
     "chalk": "^5.0.1",
+    "ejs": "^3.1.8",
     "inquirer": "^9.1.2",
     "shelljs": "^0.8.5",
     "yargs": "^17.6.0"
