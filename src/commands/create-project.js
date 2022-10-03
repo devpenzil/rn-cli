@@ -1,9 +1,10 @@
 import shell from "shelljs";
 import * as fs from "fs";
 import chalk from "chalk";
-const regex = new RegExp(/^[a-zA-Z]+$/);
+import { validator } from "../utils/Validator.js";
+
 export async function createProject(appname) {
-  const validationStatus = await validate(appname);
+  const validationStatus = await validator(appname);
   if (validationStatus) {
     shell.exec(
       `git clone https://github.com/devpenzil/clidevpenzil ${appname}`
@@ -13,12 +14,6 @@ export async function createProject(appname) {
     shell.cd("ios");
     shell.exec("pod install");
   } else {
-    console.log(chalk.bgRed("Invalid Project name"));
+    console.log(chalk.bgRed("Invalid name format"));
   }
 }
-function validate(appname) {
-  return new Promise((resolve, reject) => {
-    return resolve(regex.test(appname));
-  });
-}
-export default { createProject };
