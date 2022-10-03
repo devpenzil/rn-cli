@@ -13,7 +13,7 @@ export async function createProject(appname) {
     shell.cd("ios");
     shell.exec("pod install");
   } else {
-    console.log(chalk.red("Invalid Project name"));
+    console.log(chalk.bgRed("Invalid Project name"));
   }
 }
 function validate(appname) {
