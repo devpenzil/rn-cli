@@ -4,21 +4,35 @@ import shell from "shelljs";
 import * as fs from "fs";
 import * as ejs from "ejs";
 const componentTemplate = fs.readFileSync(
-  "/Users/ajoalex/Documents/projects/rn-cli/src/template/component.ejs",
+  "/Users/ajoalex/Documents/projects/rn-cli/src/template/component.tsx.ejs",
   "utf-8"
 );
-export async function createComponent(appname) {
-  const some = ejs.render(componentTemplate, { component: appname });
-  const validationStatus = await validator(appname);
+const styleTemplate = fs.readFileSync(
+  "/Users/ajoalex/Documents/projects/rn-cli/src/template/componentStyle.ejs",
+  "utf-8"
+);
+export async function createComponent(compname) {
+  const component = ejs.render(componentTemplate, { props: compname });
+  const style = ejs.render(styleTemplate, { props: compname });
+  const validationStatus = await validator(compname);
   if (validationStatus) {
-    shell.mkdir(appname);
-    shell.cd(appname);
-    shell.touch(`${appname}.component.tsx`);
-    shell.touch(`${appname}.style.ts`);
-    fs.writeFileSync(
-      `/Users/ajoalex/Documents/projects/rn-cli/${appname}/${appname}.component.tsx`,
-      some
-    );
+    fs.mkdir(compname, (err) => {
+      if (err === null) {
+        shell.cd(compname);
+        shell.touch(`${compname}.component.tsx`);
+        shell.touch(`${compname}.style.ts`);
+        fs.writeFileSync(
+          `/Users/ajoalex/Documents/projects/rn-cli/${compname}/${compname}.component.tsx`,
+          component
+        );
+        fs.writeFileSync(
+          `/Users/ajoalex/Documents/projects/rn-cli/${compname}/${compname}.style.ts`,
+          style
+        );
+      } else {
+        console.log(chalk.bgRed(err.message));
+      }
+    });
   } else {
     console.log(chalk.bgRed("Invalid name format"));
   }
